@@ -1,0 +1,20 @@
+name: health-api
+path_prefix: /health
+
+routes:
+  - path: /
+    methods: [GET]
+    backend:
+      type: stock
+      status: 200
+      body: '{"status":"ok"}'
+      headers:
+        - name: Content-Type
+          value: application/json
+
+  # Example Oracle Functions backend (needs create_functions_policy = true):
+  # - path: /echo
+  #   methods: [POST]
+  #   backend:
+  #     type: function
+  #     function_id: ocid1.fnfunc.oc1.uk-london-1.aaaa

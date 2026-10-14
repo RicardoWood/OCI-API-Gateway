@@ -1,0 +1,41 @@
+# One file = one API Gateway deployment. Edit, open a PR, merge -> deployed.
+name: orders-api
+path_prefix: /orders
+
+auth:
+  issuer: https://identity.oraclecloud.com/
+  audiences: [orders-api]
+  jwks_uri: https://idcs-example.identity.oraclecloud.com/admin/v1/SigningCert/jwk
+
+cors:
+  allowed_origins: ["https://app.example.com"]
+  allowed_methods: [GET, POST, OPTIONS]
+  allowed_headers: [Authorization, Content-Type]
+  max_age_seconds: 600
+
+rate_limit:
+  requests_per_second: 100
+  key: CLIENT_IP
+
+routes:
+  - path: /
+    methods: [GET]
+    scopes: [orders.read]
+    backend:
+      type: http
+      url: https://orders.internal.example.com/v1/orders
+      read_timeout_seconds: 30
+
+  - path: /{orderId}
+    methods: [GET]
+    scopes: [orders.read]
+    backend:
+      type: http
+      url: "https://orders.internal.example.com/v1/orders/${request.path[orderId]}"
+
+  - path: /
+    methods: [POST]
+    scopes: [orders.write]
+    backend:
+      type: http
+      url: https://orders.internal.example.com/v1/orders

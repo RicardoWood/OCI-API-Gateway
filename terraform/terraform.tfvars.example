@@ -1,0 +1,9 @@
+region           = "uk-london-1"
+compartment_ocid = "ocid1.compartment.oc1..aaaa"
+subnet_id        = "ocid1.subnet.oc1.uk-london-1.aaaa"
+environment      = "dev"
+gateway_name     = "api-gateway"
+
+# Deploy into an existing gateway instead:
+# create_gateway      = false
+# existing_gateway_id = "ocid1.apigateway.oc1.uk-london-1.aaaa"
